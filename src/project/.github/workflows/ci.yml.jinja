@@ -18,103 +18,32 @@ env:
 
 jobs:
 
-  quality:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Fetch all tags
-      run: git fetch --depth=1 --tags
-
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.11"
-
-    - name: Install uv
-      run: pip install uv
-
-    - name: Install dependencies
-      run: make setup
-
-    - name: Check if the documentation builds correctly
-      run: make check-docs
-
-    - name: Check the code quality
-      run: make check-quality
-
-    - name: Check if the code is correctly typed
-      run: make check-types
-
-    - name: Check for vulnerabilities in dependencies
-      run: make check-dependencies
-
-    - name: Check for breaking changes in the API
-      run: make check-api
-
-  {% if insiders -%}
-  exclude-test-jobs:
-    runs-on: ubuntu-latest
-    outputs:
-      jobs: {% raw %}${{ steps.exclude-jobs.outputs.jobs }}{% endraw %}
-    steps:
-    - id: exclude-jobs
-      run: |
-        if ${{ "{{" }} github.repository_owner == '{{ author_username }}-insiders' {{ "}}" }}; then
-          echo 'jobs=[
-            {"os": "macos-latest"},
-            {"os": "windows-latest"},
-            {"python-version": "3.9"},
-            {"python-version": "3.10"},
-            {"python-version": "3.11"},
-            {"python-version": "3.12"}
-          ]' | tr -d '[:space:]' >> $GITHUB_OUTPUT
-        else
-          echo 'jobs=[]' >> $GITHUB_OUTPUT
-        fi
-
-  {% endif -%}
   tests:
 
-    {% if insiders -%}
-    needs: exclude-test-jobs
-    {% endif -%}
     strategy:
+      fail-fast: true
       matrix:
-        os:
-        - ubuntu-latest
-        - macos-latest
-        - windows-latest
-        python-version:
-        - "3.8"
-        - "3.9"
-        - "3.10"
-        - "3.11"
-        - "3.12"
-        {%- if insiders %}
-        exclude: {% raw %}${{ fromJSON(needs.exclude-test-jobs.outputs.jobs) }}{% endraw %}
-        {%- endif %}
-    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
-    continue-on-error: {% raw %}${{ matrix.python-version == '3.12' }}{% endraw %}
+        include:
+          - rye_version: "0.28.0"
+            rye_home: "/opt/rye"
+            use_uv: "true"
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        id: get-cache
+        key: "${{ matrix.rye_version }}-${{ matrix.use_uv }}"
+        path: "${{ matrix.rye_home }}"
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
-        allow-prereleases: true
+      - uses: phi-friday/install-rye@v1.2
+        if: steps.get-cache.outputs.cache-hit != 'true'
+        id: install-rye
+        with:
+          rye_version: "${{ matrix.rye_version }}"
+          rye_home: "${{ matrix.rye_home }}"
+          use_uv: "${{ matrix.use_uv }}"
 
-    - name: Install uv
-      run: pip install uv
+      - name: Install dependencies
+        run: rye sync
 
-    - name: Install dependencies
-      run: make setup
-
-    - name: Run the test suite
-      run: make test
+      - name: Run the test suite
+        run: rye run pytest --cov=src/ --cov-report=term-missing --cov-report=html --disable-warnings

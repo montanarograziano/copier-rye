@@ -27,6 +27,27 @@ dev-dependencies = [
 ]
 
 
+[tool.rye.scripts]
+c = {cmd = "rye run cz commit"}
+commit = {cmd = "rye run cz commit"}
+check = {cmd = "git add . && rye run pre-commit run"}
+docs = {cmd = "rye run mkdocs serve --config-file=docs/mkdocs.yml"}
+set-default-doc-version = {cmd = "rye run mike set-default latest"}
+preview-docs = {cmd = rye run mike serve --config-file=docs/mkdocs.yml"}
+test = {cmd = "rye run pytest --cov=src/ --cov-report=term-missing --cov-report=html --disable-warnings"}
+
+update-hooks = {cmd = "rye run pre-commit install-hooks && rye run pre-commmit autoupdate"}
+format = {cmd = "rye run blacken-docs -- src/**/*.py tests/*.py && rye run ruff format --src tests && rye run ruff check --select=I001 --fix src tests"}
+lint = {cmd = "rye run ruff chceck -- src tests"}
+typecheck = {cmd = "rye run mypy -- src tests"}
+audit = {cmd = "rye run pip-audit && rye run deptry --src tests"}
+check-bump = {cmd = "rye run cz bump --dry-run"}
+pre-release = {chain = ["format", "lint", "typecheck", "audit", "check-bump"]}
+bump = {cmd = "rye run cz bump"}
+push-tag = {cmd = "git push && git push --tag"}
+release = {chain = ["format", "audit", "lint", "typecheck", "bump", "push-tag"]}
+
+
 [tool.hatch.metadata]
 allow-direct-references = true
 
@@ -93,7 +114,7 @@ check_consistency = true
   docs = "📚 Docs"
 
 [tool.mypy]
-python_version = "3.9"
+python_version = {{ ensure_python_version }}
 python_executable = ".venv/bin/python"
 show_error_codes = true
 
