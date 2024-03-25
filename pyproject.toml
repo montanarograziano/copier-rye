@@ -1,0 +1,46 @@
+[project]
+name = "copier-rye"
+version = "0.1.0"
+description = "A Copier template that uses Rye"
+authors = [
+    { name = "montanarograziano", email = "graziano.montanaro98@gmail.com" }
+]
+dependencies = [
+]
+readme = "README.md"
+requires-python = "~= 3.10"
+license = { text = "MIT" }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "jinja2>=3.1.3",
+    "pytest>=8.1.1",
+    "deptry>=0.14.2",
+    "mypy>=1.9.0",
+    "validate-pyproject>=0.16",
+    "pyproject-fmt>=1.7.0",
+    "pre-commit>=3.6.2",
+    "regex>=2023.12.25",
+    "black>=24.3.0",
+    "cffi>=1.16.0",
+    "commitizen>=3.20.0",
+    "mkdocstrings>=0.24.1",
+    "mkdocstrings-python>=1.9.0",
+    "mkdocs-macros-plugin>=1.0.5",
+    "mkdocs-material[imaging]>=9.5.14",
+    "pytest-cov>=4.1.0",
+    "ipykernel>=6.29.3",
+    "blacken-docs>=1.16.0",
+    "ruff>=0.3.4",
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/copier_rye"]

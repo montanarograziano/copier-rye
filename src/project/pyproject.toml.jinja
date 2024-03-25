@@ -1,0 +1,225 @@
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "pytest>=8.1.1",
+    "deptry>=0.14.2",
+    "mypy>=1.9.0",
+    "validate-pyproject>=0.16",
+    "pyproject-fmt>=1.7.0",
+    "pre-commit>=3.6.2",
+    "regex>=2023.12.25",
+    "black>=24.3.0",
+    "cffi>=1.16.0",
+    "commitizen>=3.20.0",
+    "pandas>=2.2.1",
+    "numpy>=1.26.4",
+    "mkdocstrings>=0.24.1",
+    "mkdocstrings-python>=1.9.0",
+    "mkdocs-macros-plugin>=1.0.5",
+    "mkdocs-material[imaging]>=9.5.14",
+    "pytest-cov>=4.1.0",
+    "python-dateutil>=2.9.0.post0",
+    "ipykernel>=6.29.3",
+    "blacken-docs>=1.16.0",
+    "loguru>=0.7.2",
+    "ruff>=0.3.4",
+    "pandas-stubs>=2.2.1.240316",
+]
+
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.ruff]
+src = ["src"]
+target-version = "py{{ ensure_python_version.replace('.', '') }}"
+line-length = 88
+
+select = [
+  # default
+  "E",      # pycodestyle error
+  "F",      # flake8 error
+  # extra
+  "A",      # builtin shadowing
+  "B",      # flake8 bugbear
+  "BLE",    # aboid bare excepts
+  "C4",     # simplify comprehensions
+  "D",      # pydocstyle
+  "DTZ",    # datetime errors
+  "FBT",    # avoid boolean trap
+  "G",      # logging format
+  "I",      # isort imports
+  "N",      # conform to PEP8 naming rules
+  "RET",    # return values
+  "S",      # bandit
+  "TRY",    # exceptions antipatterns
+  "UP",     # upgade syntax
+  "W",      # pycodestyle warning
+  "YTT",    # wrong usage of sys.info
+]
+fix = true
+ignore = ["D107", "E501", "TRY003"]
+
+  [tool.ruff.per-file-ignores]
+  "__init__.py" = ["F401", "I002"]
+
+  [tool.ruff.pydocstyle]
+  convention = "google"
+
+  [tool.ruff.pycodestyle]
+  max-doc-length = 88
+
+  [tool.ruff.isort]
+  required-imports = ["from __future__ import annotations"]
+
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+version_files = ["src/{{ python_package_import_name }}/__init__.py:^__version__"]
+annotated_tag = true
+incremental = true
+update_changelog_on_bump = true
+check_consistency = true
+
+  [tool.commitizen.change_type_map]
+  feat = "⚡ Feat"
+  fix = "🐞 Fix"
+  perf = "🚀 Performance"
+  refactor = "🛠  Refactor"
+  docs = "📚 Docs"
+
+[tool.mypy]
+python_version = "3.9"
+python_executable = ".venv/bin/python"
+show_error_codes = true
+
+check_untyped_defs = true
+disallow_any_unimported = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+warn_return_any = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+pythonpath = "src"
+
+[tool.pyright]
+exclude = [ ".venv" ]
+venvPath = "."
+venv = ".venv"
+
+[project]
+name = "{{ python_package_distribution_name }}"
+description = "{{ project_description }}"
+authors = [{name = "{{ author_fullname }}", email = "{{ author_email }}"}]
+license = {text = "
+    {%- if copyright_license == "Academic Free License v3.0" -%}
+    AFL-3.0
+    {%- elif copyright_license == "Apache License 2.0" -%}
+    Apache-2.0
+    {%- elif copyright_license == "Artistic License 2.0" -%}
+    Artistic-2.0
+    {%- elif copyright_license == "BSD 2-Clause \"Simplified\" License" -%}
+    BSD-2-Clause
+    {%- elif copyright_license == "BSD 3-Clause Clear License" -%}
+    BSD-3-Clause-Clear
+    {%- elif copyright_license == "BSD 3-Clause \"New\" or \"Revised\" License" -%}
+    BSD-3-Clause
+    {%- elif copyright_license == "Boost Software License 1.0" -%}
+    BSL-1.0
+    {%- elif copyright_license == "Creative Commons Attribution 4.0" -%}
+    CC-BY-4.0
+    {%- elif copyright_license == "Creative Commons Attribution Share Alike 4.0" -%}
+    CC-BY-SA-4.0
+    {%- elif copyright_license == "Creative Commons Zero v1.0 Universal" -%}
+    CC0-1.0
+    {%- elif copyright_license == "Do What The F*ck You Want To Public License" -%}
+    WTFPL
+    {%- elif copyright_license == "Educational Community License v2.0" -%}
+    ECL-2.0
+    {%- elif copyright_license == "Eclipse Public License 1.0" -%}
+    EPL-1.0
+    {%- elif copyright_license == "Eclipse Public License 2.0" -%}
+    EPL-2.0
+    {%- elif copyright_license == "European Union Public License 1.1" -%}
+    EUPL-1.1
+    {%- elif copyright_license == "European Union Public License 1.2" -%}
+    EUPL-1.2
+    {%- elif copyright_license == "GNU Affero General Public License v3.0" -%}
+    AGPL-3.0
+    {%- elif copyright_license == "GNU General Public License v2.0" -%}
+    GPL-2.0
+    {%- elif copyright_license == "GNU General Public License v3.0" -%}
+    GPL-3.0
+    {%- elif copyright_license == "GNU Lesser General Public License v2.1" -%}
+    LGPL-2.1
+    {%- elif copyright_license == "GNU Lesser General Public License v3.0" -%}
+    LGPL-3.0
+    {%- elif copyright_license == "ISC License" -%}
+    ISC
+    {%- elif copyright_license == "LaTeX Project Public License v1.3c" -%}
+    LPPL-1.3c
+    {%- elif copyright_license == "MIT License" -%}
+    MIT
+    {%- elif copyright_license == "Mozilla Public License 2.0" -%}
+    MPL-2.0
+    {%- elif copyright_license == "Microsoft Public License" -%}
+    MS-PL
+    {%- elif copyright_license == "Microsoft Reciprocal License" -%}
+    MS-RL
+    {%- elif copyright_license == "University of Illinois/NCSA Open Source License" -%}
+    NCSA
+    {%- elif copyright_license == "SIL Open Font License 1.1" -%}
+    OFL-1.1
+    {%- elif copyright_license == "Open Software License 3.0" -%}
+    OSL-3.0
+    {%- elif copyright_license == "PostgreSQL License" -%}
+    PostgreSQL
+    {%- elif copyright_license == "The Unlicense" -%}
+    Unlicense
+    {%- elif copyright_license == "zlib License" -%}
+    Zlib
+    {%- endif %}"}
+readme = "README.md"
+requires-python = ">={{ ensure_python_version }}"
+keywords = []
+dynamic = ["version"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Documentation",
+    "Topic :: Software Development",
+    "Topic :: Utilities",
+    "Typing :: Typed",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://{{ repository_namespace }}.{{ repository_provider.rsplit('.', 1)[0] }}.io/{{ repository_name }}"
+Documentation = "https://{{ repository_namespace }}.{{ repository_provider.rsplit('.', 1)[0] }}.io/{{ repository_name }}"
+Changelog = "https://{{ repository_namespace }}.{{ repository_provider.rsplit('.', 1)[0] }}.io/{{ repository_name }}/changelog"
+Repository = "https://{{ repository_provider }}/{{ repository_namespace }}/{{ repository_name }}"
+Issues = "https://{{ repository_provider }}/{{ repository_namespace }}/{{ repository_name }}/issues"
+Discussions = "https://{{ repository_provider }}/{{ repository_namespace }}/{{ repository_name }}/discussions"
+{%- if repository_provider == "github.com" %}
+Funding = "https://{{ repository_provider }}/sponsors/{{ author_username }}"
+{%- endif %}
+
+{% if python_package_command_line_name -%}
+[project.scripts]
+{{ python_package_command_line_name }} = "{{ python_package_import_name }}.cli:main"
+
+{% endif -%}
