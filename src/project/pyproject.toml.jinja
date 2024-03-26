@@ -8,7 +8,6 @@ dev-dependencies = [
     "pyproject-fmt>=1.7.0",
     "pre-commit>=3.6.2",
     "regex>=2023.12.25",
-    "black>=24.3.0",
     "cffi>=1.16.0",
     "commitizen>=3.20.0",
     "pandas>=2.2.1",
@@ -20,32 +19,10 @@ dev-dependencies = [
     "pytest-cov>=4.1.0",
     "python-dateutil>=2.9.0.post0",
     "ipykernel>=6.29.3",
-    "blacken-docs>=1.16.0",
     "loguru>=0.7.2",
     "ruff>=0.3.4",
     "pandas-stubs>=2.2.1.240316",
 ]
-
-
-[tool.rye.scripts]
-c = {cmd = "rye run cz commit"}
-commit = {cmd = "rye run cz commit"}
-check = {cmd = "git add . && rye run pre-commit run"}
-docs = {cmd = "rye run mkdocs serve --config-file=docs/mkdocs.yml"}
-set-default-doc-version = {cmd = "rye run mike set-default latest"}
-preview-docs = {cmd = rye run mike serve --config-file=docs/mkdocs.yml"}
-test = {cmd = "rye run pytest --cov=src/ --cov-report=term-missing --cov-report=html --disable-warnings"}
-
-update-hooks = {cmd = "rye run pre-commit install-hooks && rye run pre-commmit autoupdate"}
-format = {cmd = "rye run blacken-docs -- src/**/*.py tests/*.py && rye run ruff format --src tests && rye run ruff check --select=I001 --fix src tests"}
-lint = {cmd = "rye run ruff chceck -- src tests"}
-typecheck = {cmd = "rye run mypy -- src tests"}
-audit = {cmd = "rye run pip-audit && rye run deptry --src tests"}
-check-bump = {cmd = "rye run cz bump --dry-run"}
-pre-release = {chain = ["format", "lint", "typecheck", "audit", "check-bump"]}
-bump = {cmd = "rye run cz bump"}
-push-tag = {cmd = "git push && git push --tag"}
-release = {chain = ["format", "audit", "lint", "typecheck", "bump", "push-tag"]}
 
 
 [tool.hatch.metadata]
@@ -239,8 +216,4 @@ Discussions = "https://{{ repository_provider }}/{{ repository_namespace }}/{{ r
 Funding = "https://{{ repository_provider }}/sponsors/{{ author_username }}"
 {%- endif %}
 
-{% if python_package_command_line_name -%}
-[project.scripts]
-{{ python_package_command_line_name }} = "{{ python_package_import_name }}.cli:main"
 
-{% endif -%}

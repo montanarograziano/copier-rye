@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  LANG: en_US.utf-8
+  LC_ALL: en_US.utf-8
+  PYTHONIOENCODING: UTF-8
+  PYTHON_VERSIONS: ""
+
+jobs:
+
+  tests:
+
+    strategy:
+      matrix:
+        rye_version: ["0.28.0"]
+        rye_home: ["/opt/rye"]
+        use_uv: ["true"]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache Rye
+        uses: actions/cache@v2
+        id: cache-rye
+        with:
+          path: ${{ matrix.rye_home }}
+          key: ${{ runner.os }}-rye-${{ matrix.rye_version }}-${{ matrix.use_uv }}
+          restore-keys: |
+            ${{ runner.os }}-rye-${{ matrix.rye_version }}-
+            ${{ runner.os }}-rye-
+
+      - name: Install Rye
+        if: steps.cache-rye.outputs.cache-hit != 'true'
+        run: |
+          curl -sSL https://install.rye.sh | bash -s -- -v ${{ matrix.rye_version }} -p ${{ matrix.rye_home }} --uv ${{ matrix.use_uv }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: |
+          source ${{ matrix.rye_home }}/bin/activate
+          rye sync
+
+      - name: Run tests
+        run: |
+          source ${{ matrix.rye_home }}/bin/activate
+          rye run pytest --cov=src/ --cov-report=term-missing --cov-report=html --disable-warnings

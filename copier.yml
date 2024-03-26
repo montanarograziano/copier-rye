@@ -128,8 +128,3 @@ python_package_import_name:
   type: str
   help: Your Python package import name (for `import NAME` in Python code)
   default: "{{ project_name | slugify('_') }}"
-
-python_package_command_line_name:
-  type: str
-  help: Your CLI name if any (for use in the shell)
-  default: "{{ project_name | slugify }}"
