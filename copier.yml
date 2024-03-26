@@ -56,21 +56,6 @@ repository_name:
   help: Your repository name
   default: "{{ project_name | slugify }}"
 
-copyright_holder:
-  type: str
-  help: The name of the person/entity holding the copyright
-  default: "{{ author_fullname }}"
-
-copyright_holder_email:
-  type: str
-  help: The email of the person/entity holding the copyright
-  default: "{{ author_email }}"
-
-copyright_date:
-  type: str
-  help: The copyright date
-  default: "{{ current_year }}"
-
 copyright_license:
   type: str
   help: Your project's license
