@@ -15,8 +15,7 @@
 - [`rye`](https://rye-up.com) is a comprehensive project and package management solution for Python.
 - [`just`](https://github.com/casey/just/) is a modern rewrite of `make` in Rust 🦀
 - [`pre-commit`](https://github.com/pre-commit/pre-commit) validates your commits.
-- [`black`](https://github.com/psf/black) as code formatter.
-- [`ruff`](https://github.com/charliermarsh/ruff) provides static code analysis and applies [`isort`](https://github.com/PyCQA/isort) import formatting.
+- [`ruff`](https://github.com/charliermarsh/ruff) provides static code analysis and a code and import formatting using [`black`](https://github.com/psf/black) and [`isort`](https://github.com/PyCQA/isort) styles.
 - [`mypy`](https://github.com/python/mypy/) validates your type hints.
 - [`pytest`](https://github.com/pytest-dev/pytest) runs your test suite.
 - [`mkdocs`](https://github.com/mkdocs/mkdocs) builds your documentation, while [`mkdocs-material`](https://github.com/squidfunk/mkdocs-material) provides an elegant theme. [`mike`](https://github.com/jimporter/mike) takes care of versioning your docs.
@@ -29,7 +28,7 @@
 > - The template adopts to the `src` layout.
 > - `mypy` is configured with a strict ruleset. The recommended approach to loosen those constraints is by temporary per-module ignores.
 > - `google` is the docstring style of choice.
-> - `ruff` is used to format the code, while imports are sorted with `isort` style.
+> - `ruff` is used to format the code using `black` style, while imports are sorted with `isort` style.
 > - Releases follow [Semantic Versioning](https://semver.org/).
 > - Commit follow the [Conventional Commit](https://www.conventionalcommits.org/en/v1.0.0/) specification.
 
@@ -45,7 +44,7 @@
 
 ## 🛠️ How to
 
-Install, [`rye`](https://pdm.fming.dev/latest/#installation) and [`just`](https://github.com/casey/just#installation):
+Install [`rye`](https://pdm.fming.dev/latest/#installation) and [`just`](https://github.com/casey/just#installation):
 
 ```bash
 curl -sSf https://rye-up.com/get | bash # For Linux/ Mac Users
