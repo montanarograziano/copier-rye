@@ -1,6 +1,6 @@
 [project]
 name = "copier-rye"
-version = "0.1.0"
+version = "0.2.0"
 description = "A Copier template that uses Rye"
 readme = "README.md"
 license = { text = "MIT" }
