@@ -31,7 +31,6 @@ set positional-arguments
 
 # Format code with black and isort
 @fmt:
-  rye run blacken-docs -- src/**/*.py tests/*.py
   rye run ruff format -- src tests
   rye run ruff check --select=I001 --fix src tests
 
