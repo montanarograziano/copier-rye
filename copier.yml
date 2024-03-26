@@ -17,10 +17,12 @@ _skip_if_exists:
 project_name:
   type: str
   help: Your project name
+  default: "default_project"
 
 project_description:
   type: str
   help: Your project description
+  default: "Your project description"
 
 author_fullname:
   type: str

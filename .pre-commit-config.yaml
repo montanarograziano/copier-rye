@@ -1,0 +1,70 @@
+default_install_hook_types:
+  - pre-commit
+  - pre-push
+default_language_version:
+  python: python3.10
+repos:
+  - repo: https://gitlab.com/bmares/check-json5
+    rev: v1.0.0
+    hooks:
+      - id: check-json5
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-yaml
+      - id: check-toml
+      - id: check-added-large-files
+        args: [--maxkb=5120]
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff (isort)
+        alias: isort
+        language: system
+        types: [python]
+        entry: rye run ruff check
+        args: [--select=I001, --fix]
+
+      - id: ruff
+        name: ruff (format)
+        alias: format
+        language: system
+        types: [python]
+        entry: rye run ruff format
+
+      - id: ruff
+        alias: lint
+        name: ruff (linter)
+        language: system
+        types: [python]
+        entry: rye run ruff
+
+      - id: mypy
+        language: system
+        name: mypy
+        types: [python]
+        files: "^(src/|docs/|tests/)"
+        entry: rye run mypy
+
+      - id: pyproject-fmt
+        name: pyproject-fmt
+        language: system
+        files: pyproject.toml
+        entry: rye run pyproject-fmt
+
+      - id: validate-pyproject
+        name: validate-pyproject
+        language: system
+        files: pyproject.toml
+        entry: rye run validate-pyproject
+
+      # - id: commitizen
+      #   name: commitizen
+      #   language: system
+      #   stages: [push]
+      #   types: [python]
+      #   entry: rye run cz check
+      #   pass_filenames: false
+      #   args: [--rev-range, origin/main..HEAD]

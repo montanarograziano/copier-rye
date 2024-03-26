@@ -1,4 +1,4 @@
 # copier-rye
 
-Describe your project here.
+A Copier template that uses Rye as dependency manager.
 * License: MIT
