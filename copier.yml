@@ -17,27 +17,27 @@ _skip_if_exists:
 project_name:
   type: str
   help: Your project name
-  default: "default_project"
+  default: "{{ 'My Project' | git_repo_name }}"
 
 project_description:
   type: str
   help: Your project description
-  default: "Your project description"
+
 
 author_fullname:
   type: str
   help: Your full name
-  default: "{{ 'your_username' | git_user_name }}"
+  default: "{{ 'Max Ludden' | git_user_name }}"
 
 author_email:
   type: str
   help: Your email
-  default: "{{ 'example@mail.com' | git_user_email }}"
+  default: "{{ 'dev@maxludden.com' | git_user_email }}"
 
 author_username:
   type: str
   help: Your username (e.g. on GitHub)
-  default: your_git_username
+  default: maxludden
 
 repository_provider:
   type: str
@@ -53,13 +53,13 @@ repository_namespace:
 
 repository_name:
   type: str
-  help: Your repository name
+  help: The name of your {{ repository_provider }} repository name
   default: "{{ project_name | slugify }}"
 
 copyright_license:
   type: str
   help: Your project's license
-  default: GNU General Public License v3.0
+  default: MIT License
   choices:
     - Academic Free License v3.0
     - Apache License 2.0

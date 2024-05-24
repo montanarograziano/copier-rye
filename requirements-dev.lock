@@ -6,13 +6,17 @@
 #   features: []
 #   all-features: false
 #   with-sources: false
+#   generate-hashes: false
 
 -e file:.
+annotated-types==0.7.0
+    # via pydantic
 appnope==0.1.4
     # via ipykernel
 argcomplete==3.2.3
     # via commitizen
 asttokens==2.4.1
+    # via snoop
     # via stack-data
 babel==2.14.0
     # via mkdocs-material
@@ -36,18 +40,25 @@ cfgv==3.4.0
 charset-normalizer==3.3.2
     # via commitizen
     # via requests
+cheap-repr==0.5.1
+    # via snoop
 click==8.1.7
     # via black
     # via deptry
+    # via lorem-text
     # via mkdocs
     # via mkdocstrings
+    # via typer
 colorama==0.4.6
     # via commitizen
+    # via copier
     # via griffe
     # via mkdocs-material
 comm==0.2.2
     # via ipykernel
 commitizen==3.20.0
+copier==9.2.0
+    # via copier-rye
 coverage==7.4.4
     # via pytest-cov
 cssselect2==0.7.0
@@ -66,13 +77,18 @@ defusedxml==0.7.1
 deptry==0.15.0
 distlib==0.3.8
     # via virtualenv
+dunamai==1.21.1
+    # via copier
 executing==2.0.1
+    # via snoop
     # via stack-data
 fastjsonschema==2.19.1
     # via validate-pyproject
 filelock==3.13.1
     # via cachecontrol
     # via virtualenv
+funcy==2.0
+    # via copier
 ghp-import==2.1.0
     # via mkdocs
 griffe==0.42.1
@@ -94,10 +110,14 @@ jedi==0.19.1
     # via ipython
 jinja2==3.1.3
     # via commitizen
+    # via copier
+    # via jinja2-ansible-filters
     # via mkdocs
     # via mkdocs-macros-plugin
     # via mkdocs-material
     # via mkdocstrings
+jinja2-ansible-filters==1.3.2
+    # via copier
 jupyter-client==8.6.1
     # via ipykernel
 jupyter-core==5.7.2
@@ -105,6 +125,11 @@ jupyter-core==5.7.2
     # via jupyter-client
 license-expression==30.3.0
     # via cyclonedx-python-lib
+loguru==0.7.2
+    # via copier-rye
+    # via maxgradient
+lorem-text==2.1
+    # via maxgradient
 markdown==3.5.2
     # via mkdocs
     # via mkdocs-autorefs
@@ -122,6 +147,8 @@ markupsafe==2.1.5
 matplotlib-inline==0.1.6
     # via ipykernel
     # via ipython
+maxgradient==0.3.1
+    # via copier-rye
 mdurl==0.1.2
     # via markdown-it-py
 mergedeep==1.3.4
@@ -138,6 +165,7 @@ mkdocs-material==9.5.15
 mkdocs-material-extensions==1.3.1
     # via mkdocs-material
 mkdocstrings==0.24.1
+    # via maxgradient
     # via mkdocstrings-python
 mkdocstrings-python==1.9.0
 msgpack==1.0.8
@@ -152,11 +180,15 @@ nest-asyncio==1.6.0
     # via ipykernel
 nodeenv==1.8.0
     # via pre-commit
+numpy==1.26.4
+    # via maxgradient
 packageurl-python==0.15.0
     # via cyclonedx-python-lib
 packaging==24.0
     # via black
     # via commitizen
+    # via copier
+    # via dunamai
     # via ipykernel
     # via mkdocs
     # via pip-audit
@@ -169,7 +201,10 @@ parso==0.8.3
     # via jedi
 pathspec==0.12.1
     # via black
+    # via copier
     # via mkdocs
+pendulum==3.0.0
+    # via maxgradient
 pexpect==4.9.0
     # via ipython
 pillow==10.2.0
@@ -190,6 +225,8 @@ platformdirs==4.2.0
     # via virtualenv
 pluggy==1.4.0
     # via pytest
+plumbum==1.8.3
+    # via copier
 pre-commit==3.7.0
 prompt-toolkit==3.0.36
     # via ipython
@@ -204,10 +241,23 @@ py-serializable==1.0.2
     # via cyclonedx-python-lib
 pycparser==2.21
     # via cffi
+pydantic==2.7.1
+    # via copier
+    # via maxgradient
+    # via pydantic-extra-types
+    # via pydantic-settings
+pydantic-core==2.18.2
+    # via pydantic
+pydantic-extra-types==2.7.0
+    # via maxgradient
+pydantic-settings==2.2.1
+    # via maxgradient
 pygments==2.17.2
+    # via copier
     # via ipython
     # via mkdocs-material
     # via rich
+    # via snoop
 pymdown-extensions==10.7.1
     # via mkdocs-material
     # via mkdocstrings
@@ -221,8 +271,15 @@ python-dateutil==2.9.0.post0
     # via ghp-import
     # via jupyter-client
     # via mkdocs-macros-plugin
+    # via pendulum
+    # via time-machine
+python-dotenv==1.0.1
+    # via maxgradient
+    # via pydantic-settings
 pyyaml==6.0.1
     # via commitizen
+    # via copier
+    # via jinja2-ansible-filters
     # via mkdocs
     # via mkdocs-macros-plugin
     # via pre-commit
@@ -235,6 +292,7 @@ pyzmq==25.1.2
     # via jupyter-client
 questionary==2.0.1
     # via commitizen
+    # via copier
 regex==2023.12.25
     # via mkdocs-material
 requests==2.31.0
@@ -242,14 +300,22 @@ requests==2.31.0
     # via mkdocs-material
     # via pip-audit
 rich==13.7.1
+    # via copier-rye
+    # via maxgradient
     # via pip-audit
+    # via typer
 ruff==0.3.4
 setuptools==69.2.0
     # via nodeenv
+shellingham==1.5.4
+    # via typer
 six==1.16.0
     # via asttokens
     # via html5lib
     # via python-dateutil
+    # via snoop
+snoop==0.4.3
+    # via maxgradient
 sortedcontainers==2.4.0
     # via cyclonedx-python-lib
 stack-data==0.6.3
@@ -257,6 +323,8 @@ stack-data==0.6.3
 termcolor==2.4.0
     # via commitizen
     # via mkdocs-macros-plugin
+time-machine==2.14.1
+    # via pendulum
 tinycss2==1.2.1
     # via cairosvg
     # via cssselect2
@@ -275,8 +343,15 @@ traitlets==5.14.2
     # via jupyter-client
     # via jupyter-core
     # via matplotlib-inline
+typer==0.12.3
+    # via maxgradient
 typing-extensions==4.10.0
     # via mypy
+    # via pydantic
+    # via pydantic-core
+    # via typer
+tzdata==2024.1
+    # via pendulum
 urllib3==2.2.1
     # via requests
 validate-pyproject==0.16

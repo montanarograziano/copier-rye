@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"editor.semanticHighlighting.enabled": true,
+		"editor.semanticTokenColorCustomizations": {
+			"enabled": true,
+			"[One Dark Drop]": {
+				"enabled": true,
+				"rules": {
+					"variable.language.special.self.python": {
+						"foreground": "#99ff00",
+						"fontStyle": "bold underline"
+					}
+				}
+			},
+		}
+	}
+}
