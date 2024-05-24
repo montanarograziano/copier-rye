@@ -15,6 +15,10 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
+    "maxgradient>=0.3.1",
+    "loguru>=0.7.2",
+    "rich>=13.7.1",
+    "copier>=9.2.0",
 ]
 
 [build-system]
